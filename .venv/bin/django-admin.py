@@ -1,4 +1,4 @@
-#!/home/ramin/Desktop/ProduceAz/2020-ProduceAz/produce.az-Backend/produceAz/.venv/bin/python3
+#!/home/techacademy/Desktop/ProduceAZ_1/.venv/bin/python3
 from django.core import management
 
 if __name__ == "__main__":

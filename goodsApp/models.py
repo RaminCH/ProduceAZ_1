@@ -24,7 +24,7 @@ class Products(models.Model):
     email = models.EmailField(max_length=60, blank=False, null=True)
     made_in = models.CharField(max_length=255, blank=False, null=True)
     url = models.CharField(max_length=255, blank=False, null=True)
-    description = models.CharField(max_length=255, blank=False, null=True)
+    description = models.TextField(blank=False, null=True)
     add_info = models.CharField(max_length=255, blank=False, null=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='products', null=True)
     created_at = models.DateTimeField(auto_now_add=True)

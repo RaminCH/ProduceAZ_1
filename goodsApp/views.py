@@ -12,12 +12,17 @@ from goodsApp.forms import *
 def index(request):
     return render(request,'index.html')
 
-def categories(request):
-    return render(request, 'goodsApp/product.html')
+# def categories(request):
+#     return render(request, 'goodsApp/product.html')
 
-def products(request):
+def get_products(request):
+
+    categories = Category.objects.all()
+    products = Products.objects.all()
+
     context = {
-        'category': Category.objects.all()
+        'categories': categories,
+        'products': products
     }
     print(context)
     return render(request, 'product.html', context)
@@ -40,26 +45,68 @@ def products(request):
 #     }
 #     return render(request, 'goodsApp/product.html', context)
 
-def products_detail(request, pk):
-    detail = Products.objects.all(id=pk)
+def get_category(request, cat_id):
+    categories = Category.objects.all()
+    products = Products.objects.filter(category__id = cat_id)
     context = {
-        'category': detail,
+        'cat_id': cat_id,
+        'categories': categories,
+        'products': products,
     }
-    print(context)
+    return render(request, 'product.html', context)
+
+
+def get_detail(request, prod_id):
+    product = Products.objects.get(id = prod_id)
+    related_products = Products.objects.filter(category = product.category)
+    context = {
+        'product': product,
+        'related_products': related_products
+    }
     return render(request, 'product-detail.html', context)
 
 
 
-
+    
 
 
 
 #///////////////////////////////////////////////////////////    
-
-# class ProductDetailView(FormMixin, DetailView):
+# class SingleRecipeView(FormMixin, DetailView): # Single-nin class base-i
 #     model = Products
 #     template_name = "goodsApp/product-detail.html"
-#     context_object_name = # ???
-#     form_class = # ???
+
+#     # def get_queryset(self, request, *args, **kwargs):
+
+#     def get_object(self, queryset=None):
+#         obj = super().get_object(queryset)
+#         obj.view_count = obj.view_count + 1
+#         obj.save()
+#         return obj
+    
+
+#     def post(self, request, *args, **kwargs):
+#         self.object = self.get_object()
+#         self.replied_comment = request.POST.get('reply_comment')
+#         form = self.get_form()
+#         # form.save(commit=False)
+#         if form.is_valid():
+#             print('here')
+#             return self.form_valid(form)
+#         else:
+#             print('here 2')
+#             return self.form_invalid(form)
+
+#     def form_valid(self, form):
+#         comment = form.save(commit=False)
+#         comment.user = self.request.user
+#         comment.recipe = self.object
+#         if not self.replied_comment is None and self.replied_comment.isdigit():
+#             r_comment = Comment.objects.get(id=int(self.replied_comment))
+#             comment.reply_comment = r_comment 
+#         comment.save()
+#         self.success_url = reverse_lazy('stories:single', kwargs=
+#         {'pk': self.object.id})
+#         return super().form_valid(form)
 
     

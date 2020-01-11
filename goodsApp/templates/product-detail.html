@@ -4,23 +4,18 @@
 
 	<!-- breadcrumb -->
 	<div class="bread-crumb bgwhite flex-w p-l-52 p-r-15 p-t-30 p-l-15-sm">
-		<a href="index.html" class="s-text16">
+		<a href="{% url 'goodsApp:index' %}" class="s-text16">
 			Home
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
-		<a href="product.html" class="s-text16">
-			Women
-			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
-		</a>
-
-		<a href="#" class="s-text16">
-			T-Shirt
+		<a href="{% url 'goodsApp:products' %}" class="s-text16">
+			{{ product.category.name }}
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
 		<span class="s-text17">
-			Boxy T-Shirt with Roll Sleeve Detail
+			{{ product.name }}
 		</span>
 	</div>
 
@@ -32,21 +27,21 @@
 					<div class="wrap-slick3-dots"></div>
 
 					<div class="slick3">
-						<div class="item-slick3" data-thumb="images/thumb-item-01.jpg">
+						<div class="item-slick3" data-thumb="{{ product.image.url }}">
 							<div class="wrap-pic-w">
-								<img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
+								<img src="{{ product.image.url }}" alt="IMG-PRODUCT">
 							</div>
 						</div>
 
-						<div class="item-slick3" data-thumb="images/thumb-item-02.jpg">
+						<div class="item-slick3" data-thumb="{{ product.image.url }}">
 							<div class="wrap-pic-w">
-								<img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
+								<img src="{{ product.image.url }}" alt="IMG-PRODUCT">
 							</div>
 						</div>
 
-						<div class="item-slick3" data-thumb="images/thumb-item-03.jpg">
+						<div class="item-slick3" data-thumb="{{ product.image.url }}">
 							<div class="wrap-pic-w">
-								<img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
+								<img src="{{ product.image.url }}" alt="IMG-PRODUCT">
 							</div>
 						</div>
 					</div>
@@ -55,19 +50,19 @@
 
 			<div class="w-size14 p-t-30 respon5">
 				<h4 class="product-detail-name m-text16 p-b-13">
-					Boxy T-Shirt with Roll Sleeve Detail
+					{{ product.name }}
 				</h4>
 
 				<span class="m-text17">
-					$22
+					${{ product.price }}
 				</span>
 				<br>
 				<br>
 				<div class="p-b-45">
-					<b><span class="s-text8 m-r-35">Contact: +994xxxxxxxx </span></b><br>
-					<b><span class="s-text8 m-r-35">Email: ex@example.com </span></b><br>
-					<b><span class="s-text8 m-r-35">Location: Azerbaijan </span></b><br>
-					<b><span class="s-text8 m-r-35">Url:<a href="www.vvvvvvv.com">  www.ddd.com</a></span></b><br>
+					<b><span class="s-text8 m-r-35">Contact: {{ product.contact }} </span></b><br>
+					<b><span class="s-text8 m-r-35">Email: {{ product.email }} </span></b><br>
+					<b><span class="s-text8 m-r-35">Location: {{ product.made_in }} </span></b><br>
+					<b><span class="s-text8 m-r-35">Url:<a href="{{ product.url }}">  {{ product.url }}</a></span></b><br>
 				</div>
 
 				<!--  -->
@@ -80,7 +75,7 @@
 
 					<div class="dropdown-content dis-none p-t-15 p-b-23">
 						<p class="s-text8">
-							Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
+							{{ product.description }}
 						</p>
 					</div>
 				</div>
@@ -94,7 +89,7 @@
 
 					<div class="dropdown-content dis-none p-t-15 p-b-23">
 						<p class="s-text8">
-							Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
+							{{ product.add_info }}
 						</p>
 					</div>
 				</div>
@@ -115,127 +110,28 @@
 			<!-- Slide2 -->
 			<div class="wrap-slick2">
 				<div class="slick2">
-
+				{% for product in related_products %}
 					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
 						<!-- Block2 -->
 
 						<div class="block2">
 							<a href="product-detail.html">
 							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="images/item-02.jpg" alt="IMG-PRODUCT">				
+								<img src="{{ product.image.url }}" alt="IMG-PRODUCT">				
 							</div>
 							</a>
 							<div class="block2-txt p-t-20">
 								<a href="" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
+									{{ product.name }}
 								</a>
 
 								<span class="block2-price m-text6 p-r-5">
-									$75.00
+									${{ product.price }}
 								</span>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-						<!-- Block2 -->
-
-						<div class="block2">
-							<a href="product-detail.html">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="images/item-02.jpg" alt="IMG-PRODUCT">				
-							</div>
-							</a>
-							<div class="block2-txt p-t-20">
-								<a href="" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
-								</a>
-
-								<span class="block2-price m-text6 p-r-5">
-									$75.00
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-						<!-- Block2 -->
-
-						<div class="block2">
-							<a href="product-detail.html">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="images/item-02.jpg" alt="IMG-PRODUCT">				
-							</div>
-							</a>
-							<div class="block2-txt p-t-20">
-								<a href="" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
-								</a>
-
-								<span class="block2-price m-text6 p-r-5">
-									$75.00
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-						<!-- Block2 -->
-
-						<div class="block2">
-							<a href="product-detail.html">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="images/item-02.jpg" alt="IMG-PRODUCT">				
-							</div>
-							</a>
-							<div class="block2-txt p-t-20">
-								<a href="" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
-								</a>
-
-								<span class="block2-price m-text6 p-r-5">
-									$75.00
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-						<!-- Block2 -->
-
-						<div class="block2">
-							<a href="product-detail.html">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="images/item-02.jpg" alt="IMG-PRODUCT">				
-							</div>
-							</a>
-							<div class="block2-txt p-t-20">
-								<a href="" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
-								</a>
-
-								<span class="block2-price m-text6 p-r-5">
-									$75.00
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
-						<!-- Block2 -->
-
-						<div class="block2">
-							<a href="product-detail.html">
-							<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-								<img src="images/item-02.jpg" alt="IMG-PRODUCT">				
-							</div>
-							</a>
-							<div class="block2-txt p-t-20">
-								<a href="" class="block2-name dis-block s-text3 p-b-5">
-									Herschel supply co 25l
-								</a>
-
-								<span class="block2-price m-text6 p-r-5">
-									$75.00
-								</span>
-							</div>
-						</div>
-					</div>
+				{% endfor %}
 				</div>
 			</div>
 
@@ -247,14 +143,14 @@
 
 
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/animsition/js/animsition.min.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/bootstrap/js/popper.js"></script>
-	<script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+	<script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/select2/select2.min.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/select2/select2.min.js' %}"></script>
 	<script type="text/javascript">
 		$(".selection-1").select2({
 			minimumResultsForSearch: 20,
@@ -267,10 +163,10 @@
 		});
 	</script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/slick/slick.min.js"></script>
-	<script type="text/javascript" src="js/slick-custom.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/slick/slick.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/slick-custom.js' %}"></script>
 <!--===============================================================================================-->
-	<script type="text/javascript" src="vendor/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="{% static 'vendor/sweetalert/sweetalert.min.js' %}"></script>
 	<script type="text/javascript">
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
@@ -295,9 +191,9 @@
 	</script>
 
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>
 
-{% endblock coontent %}
+{% endblock content %}

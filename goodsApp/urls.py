@@ -5,7 +5,8 @@ app_name = 'goodsApp'
 
 urlpatterns = [
     path('',index,name='index'),#home
-    path('products/', products, name='products'), # product.html == catalog???
-    path('product_detail/',products_detail, name='product-detail'),
+    path('products/', get_products, name='products'), 
+    path('products/<int:cat_id>', get_category, name='get_category'),
+    path('products_detail/<int:prod_id>', get_detail, name='get_detail'),
 ]
 
