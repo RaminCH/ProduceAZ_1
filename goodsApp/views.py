@@ -66,7 +66,13 @@ def get_detail(request, prod_id):
     return render(request, 'product-detail.html', context)
 
 
+def listing(request):
+    contact_list = Products.objects.all()
+    paginator = Paginator(contact_list, 5) # Show 5 products per page.
 
+    page_number = request.GET.get('products')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'products.html', {'page_obj': page_obj})
     
 
 
