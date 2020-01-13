@@ -1,4 +1,4 @@
-#!/home/ramin/Desktop/ProduceAZ_1/.venv/bin/python
+#!/home/techacademy/Desktop/ProduceAZ_1/.venv/bin/python
 
 import sys
 import getopt
