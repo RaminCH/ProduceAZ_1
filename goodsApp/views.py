@@ -15,14 +15,25 @@ def index(request):
 # def categories(request):
 #     return render(request, 'goodsApp/product.html')
 
-def get_products(request):
 
+#----------------------------------------------------------------------------------------------------------
+# **********************************************Products***************************************************
+def get_products(request):
+    # page_number = request.GET.get('page', 1)
+    # p = Paginator(get_products, 6)
+    # print(p.num_pages)
+    # print(page_number)
+    # if not page_number.isdigit():
+    #     page_number = 1
+    # elif int(page_number) > p.num_pages:
+    #     page_number = p.num_pages
+    # product_list = p.page(page_number)
     categories = Category.objects.all()
-    products = Products.objects.all()
+    products = Products.objects.all() # ???
 
     context = {
         'categories': categories,
-        'products': products
+        'products': products,
     }
     print(context)
     return render(request, 'product.html', context)
@@ -44,7 +55,11 @@ def get_products(request):
 #         'products' = products_list # products
 #     }
 #     return render(request, 'goodsApp/product.html', context)
+# ----------------------------------------------------------------------------------------------------------------
 
+
+
+#---------------------------------------------------------------Categories----------------------------------------
 def get_category(request, cat_id):
     categories = Category.objects.all()
     products = Products.objects.filter(category__id = cat_id)
@@ -55,9 +70,9 @@ def get_category(request, cat_id):
     }
     return render(request, 'product.html', context)
 
-
+#---------------------------------------------------------Detail Of Product ---------------------------------------
 def get_detail(request, prod_id):
-    product = Products.objects.get(id = prod_id)
+    product = Products.objects.get(id = prod_id)           
     related_products = Products.objects.filter(category = product.category)
     context = {
         'product': product,
@@ -66,18 +81,25 @@ def get_detail(request, prod_id):
     return render(request, 'product-detail.html', context)
 
 
-def listing(request):
-    contact_list = Products.objects.all()
-    paginator = Paginator(contact_list, 5) # Show 5 products per page.
+# ------------------------------------------------------------Experiments------------------------------------------
+# Paginator function got form internet
+#------------------------------------------------------------------------
+# def listing(request):
+#     contact_list = Products.objects.all()
+#     paginator = Paginator(contact_list, 5) # Show 5 products per page.
 
-    page_number = request.GET.get('products')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'products.html', {'page_obj': page_obj})
-    
+#     page_number = request.GET.get('products')
+#     page_obj = paginator.get_page(page_number)
+#     return render(request, 'products.html', {'page_obj': page_obj})
+#------------------------------------------------------------------------   
 
 
 
 #///////////////////////////////////////////////////////////    
+
+# -------------------------------------------------------------------------Class Base of a Detail Product Page ----
+
+
 # class SingleRecipeView(FormMixin, DetailView): # Single-nin class base-i
 #     model = Products
 #     template_name = "goodsApp/product-detail.html"
