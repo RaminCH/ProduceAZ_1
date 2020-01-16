@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import FormMixin, UpdateView
 from django.contrib.auth.models import User
 from goodsApp.forms import *
+from django.db.models import Q
 
 # Create your views here.
 def index(request):
@@ -19,23 +20,23 @@ def index(request):
 #----------------------------------------------------------------------------------------------------------
 # **********************************************Products***************************************************
 def get_products(request):
-    # page_number = request.GET.get('page', 1)
-    # p = Paginator(get_products, 6)
-    # print(p.num_pages)
-    # print(page_number)
-    # if not page_number.isdigit():
-    #     page_number = 1
-    # elif int(page_number) > p.num_pages:
-    #     page_number = p.num_pages
-    # product_list = p.page(page_number)
+    product_list = Products.objects.all()
+    
+    if request.method == 'POST':
+        query = request.POST.get('q')
+        product_list = Products.objects.filter(Q(name__icontains=query) | Q(category__name__icontains=query) | Q(price__icontains=query) | Q(created_at__icontains=query))
+
+
     categories = Category.objects.all()
-    products = Products.objects.all() # ???
+
+    paginator = Paginator(product_list, 6)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
 
     context = {
         'categories': categories,
         'products': products,
     }
-    print(context)
     return render(request, 'product.html', context)
 
 # def products(request):
@@ -83,21 +84,29 @@ def get_detail(request, prod_id):
 
 #------------------------------------------------------------Search Result-----------------------------------------
 
-class SearchResultsView(ListView):
-    model = Products
-    template_name = 'product.html'
+# class SearchResultsView(ListView):
+#     model = Products
+#     template_name = 'product.html'
 
-    def get_queryset(self):
-        query = self.request.GET.get('q') # q is the user's search query
-        object_list = Products.objects.filter(
-            Q(name__icontains=query) | Q(price__icontains=query | Q(category__icontains=query | Q(created_at__icontains=query | Q(created_at__icontains=query)
-        )
-        # context = {
-        # 'object_list': object_list 
+#     def get_queryset(self):
+#         query = self.request.GET.get('q') # q is the user's search query
+#         object_list = Products.objects.filter(
+#             Q(name__icontains=query) | Q(price__icontains=query | Q(category__icontains=query | Q(created_at__icontains=query | Q(created_at__icontains=query)
+#         )
+#         context = {
+#             'object_list': object_list 
+#         }
+#         return render(request, 'product.html', context)
+       
 
-        # }
-        # return render(request, 'product.html', context)
-        return objects_list
+# def search_products(request):
+#     query = request.GET.get('q')
+#     print(query)
+#     object_list = Products.objects.filter(Q(name__icontains=query) | Q(price__icontains=query) | Q(category__icontains=query) | Q(created_at__icontains=query) | Q(created_at__icontains=query))
+#     context = {
+#         'object_list': object_list 
+#     }
+#     return render(request, 'product.html', context)
 #------------------------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------Experiments------------------------------------------

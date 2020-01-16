@@ -9,7 +9,7 @@
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
 
-		<a href="{% url 'goodsApp:products'  %}" class="s-text16"> <!--products.id-->
+		<a href="{% url 'goodsApp:get_category' product.category.id %}" class="s-text16"> <!--products.id-->
 			{{ product.category.name }}
 			<i class="fa fa-angle-right m-l-8 m-r-9" aria-hidden="true"></i>
 		</a>
