@@ -79,7 +79,26 @@ def get_detail(request, prod_id):
         'related_products': related_products
     }
     return render(request, 'product-detail.html', context)
+#------------------------------------------------------------------------------------------------------------------
 
+#------------------------------------------------------------Search Result-----------------------------------------
+
+class SearchResultsView(ListView):
+    model = Products
+    template_name = 'product.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q') # q is the user's search query
+        object_list = Products.objects.filter(
+            Q(name__icontains=query) | Q(price__icontains=query | Q(category__icontains=query | Q(created_at__icontains=query | Q(created_at__icontains=query)
+        )
+        # context = {
+        # 'object_list': object_list 
+
+        # }
+        # return render(request, 'product.html', context)
+        return objects_list
+#------------------------------------------------------------------------------------------------------------------
 
 # ------------------------------------------------------------Experiments------------------------------------------
 # Paginator function got form internet
