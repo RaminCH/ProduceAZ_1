@@ -33,10 +33,21 @@ def get_products(request):
     page = request.GET.get('page')
     products = paginator.get_page(page)
 
+    len_product = product_list.count()
+    page_num = products.number 
+    start =  (page_num - 1) * 6 + 1
+    end = 6 * page_num
+    if end > len_product:
+        end = len_product
+
     context = {
         'categories': categories,
         'products': products,
+        'len_product': len_product,
+        'start': start,
+        'end': end,
     }
+
     return render(request, 'product.html', context)
 
 # def products(request):
@@ -63,12 +74,28 @@ def get_products(request):
 #---------------------------------------------------------------Categories----------------------------------------
 def get_category(request, cat_id):
     categories = Category.objects.all()
-    products = Products.objects.filter(category__id = cat_id)
+    product_list = Products.objects.filter(category__id = cat_id)
+
+    paginator = Paginator(product_list, 6)
+    page = request.GET.get('page')
+    products = paginator.get_page(page)
+
+    len_product = product_list.count()
+    page_num = products.number 
+    start =  (page_num - 1) * 6 + 1
+    end = 6 * page_num
+    if end > len_product:
+        end = len_product
+
     context = {
         'cat_id': cat_id,
         'categories': categories,
         'products': products,
+        'len_product': len_product,
+        'start': start,
+        'end': end,
     }
+    
     return render(request, 'product.html', context)
 
 #---------------------------------------------------------Detail Of Product ---------------------------------------
