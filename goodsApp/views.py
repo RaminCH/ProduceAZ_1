@@ -76,6 +76,10 @@ def get_category(request, cat_id):
     categories = Category.objects.all()
     product_list = Products.objects.filter(category__id = cat_id)
 
+    if request.method == 'POST': # for searching field in categories
+        query = request.POST.get('q')
+        product_list = Products.objects.filter(Q(name__icontains=query) | Q(category__name__icontains=query) | Q(price__icontains=query) | Q(created_at__icontains=query))
+
     paginator = Paginator(product_list, 6)
     page = request.GET.get('page')
     products = paginator.get_page(page)
