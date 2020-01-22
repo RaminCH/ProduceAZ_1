@@ -8,6 +8,7 @@ from django.views.generic.edit import FormMixin, UpdateView
 from django.contrib.auth.models import User
 from goodsApp.forms import *
 from django.db.models import Q
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -69,7 +70,12 @@ def get_products(request):
 #     return render(request, 'goodsApp/product.html', context)
 # ----------------------------------------------------------------------------------------------------------------
 
+#-----------------------------------------------------------API for jquery drop down------------------------------
 
+def sorting(request):
+    return HttpResponse('Kenan Sultan')
+
+#-----------------------------------------------------------------------------------------------------------------
 
 #---------------------------------------------------------------Categories----------------------------------------
 def get_category(request, cat_id):
