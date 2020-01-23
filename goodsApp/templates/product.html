@@ -79,7 +79,7 @@
 										<option value="-price">Price: high to low</option>
 									</select>
 								</div>
-
+{% comment %} 
 								<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
 									<select name="sorting">
 										<option>Price</option>
@@ -89,7 +89,7 @@
 										<option>$150.00 - $200.00</option>
 										<option>$200.00+</option>
 									</select>
-								</div>
+								</div> {% endcomment %}
 							
 						</div>
 
@@ -105,17 +105,17 @@
 							<!-- Block2 -->
 
 							<div class="block2">
-								<a href="{% url 'goodsApp:get_detail' product.id %}">
+								<a id='href_{{ forloop.counter0 }}' href="{% url 'goodsApp:get_detail' product.id %}">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative block2-labelnew">
-									<img src="{{ product.image.url }}" alt="IMG-PRODUCT">				
+									<img id='src_{{ forloop.counter0 }}' src="{{ product.image.url }}" alt="IMG-PRODUCT">				
 								</div>
 								</a>
 								<div class="block2-txt p-t-20">
-									<a href="{% url 'goodsApp:get_detail' product.id %}" class="block2-name dis-block s-text3 p-b-5">
+									<a id='name_{{ forloop.counter0 }}' href="{% url 'goodsApp:get_detail' product.id %}" class="block2-name dis-block s-text3 p-b-5">
 										{{ product.name }}
 									</a>
 
-									<span class="block2-price m-text6 p-r-5">
+									<span id='price_{{ forloop.counter0 }}' class="block2-price m-text6 p-r-5">
 										${{ product.price }}
 									</span>
 								</div>
@@ -175,29 +175,29 @@
 
 {% block inner_js %}
 
-<!-- <script>
+<script>
 $('#sorting').change(function(){
-	// var selected_text = $("#sorting option:selected").text();
-	// var selected_val = $("#sorting option:selected").val();
-
-	var request = $.ajax({
-	url: 'http://127.0.0.1:8000/products/', // takig ajax/ from urls.py
-	method: "GET",
-	});
+	var selected_val = $("#sorting option:selected").val();
+	var token = '{{csrf_token}}';
 	
-	request.done(function( data ) {
-		var selected_text = $("#sorting option:selected").val();
-		console.log(selected_text);
-	});
-	
-	request.fail(function( jqXHR, textStatus ) {
-	alert( "Request failed: " + textStatus );
+	$.ajax({
+		headers: { "X-CSRFToken": token },
+		url: '/ajax/'+selected_val,
+		method: 'POST',
+		success: function(data){
+			for(let i = 0; i < data.length; i++){
+				$('#price_'+i).text('$'+data[i].price)
+				$('#name_'+i).text(data[i].name).attr('href', '/products_detail/' + data[i].id)
+				$('#src_'+i).attr('src', '/media/' + data[i].image)
+				$('#href_'+i).attr('href', '/products_detail/' + data[i].id)
+			}
+		}
 	});
   });
-</script> -->
+</script>
 
-<script src="{% static 'js/ajax.js' %}"></script>
-<script>
+{% comment %} <script src="{% static 'js/ajax.js' %}"></script> {% endcomment %}
+{% comment %} <script>
 	$.ajax({
 		url: '/products/',
 		method: 'GET',
@@ -211,7 +211,7 @@ $('#sorting').change(function(){
 			}
 		}
 	});
-</script>
+</script> {% endcomment %}
 
 
 {% endblock %}

@@ -18,7 +18,21 @@ def index(request):
 #     return render(request, 'goodsApp/product.html')
 
 
+
+
 #----------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------API for jquery drop down------------------------------
+
+def sorting(request, sort_by):
+    if request.method == 'POST':
+        products = Products.objects.order_by(sort_by)
+        product_list = list(products.values('id', 'name', 'price', 'image'))
+
+        return JsonResponse(product_list, safe=False) 
+
+#-----------------------------------------------------------------------------------------------------------------
+
 # **********************************************Products***************************************************
 def get_products(request):
     product_list = Products.objects.all()
@@ -79,12 +93,6 @@ def get_products(request):
 #     return render(request, 'goodsApp/product.html', context)
 # ----------------------------------------------------------------------------------------------------------------
 
-#-----------------------------------------------------------API for jquery drop down------------------------------
-
-def sorting(request):
-    return HttpResponse('Kenan Sultan')
-
-#-----------------------------------------------------------------------------------------------------------------
 
 #---------------------------------------------------------------Categories----------------------------------------
 def get_category(request, cat_id):
