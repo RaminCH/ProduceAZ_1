@@ -175,7 +175,7 @@
 
 {% block inner_js %}
 
-<script>
+<!-- <script>
 $('#sorting').change(function(){
 	// var selected_text = $("#sorting option:selected").text();
 	// var selected_val = $("#sorting option:selected").val();
@@ -186,13 +186,32 @@ $('#sorting').change(function(){
 	});
 	
 	request.done(function( data ) {
-		newName = data[0].replace("A")
+		var selected_text = $("#sorting option:selected").val();
+		console.log(selected_text);
 	});
 	
 	request.fail(function( jqXHR, textStatus ) {
 	alert( "Request failed: " + textStatus );
 	});
   });
+</script> -->
+
+<script src="{% static 'js/ajax.js' %}"></script>
+<script>
+	$.ajax({
+		url: '/products/',
+		method: 'GET',
+		dataType: 'json',
+		success: function(data){
+			console.log(data)
+			for(let i = 0; i < data.name.length; i++){
+				var repl = data.name[i].name
+				var replace = repl.replace(repl,"A");
+				console.log(replace)
+			}
+		}
+	});
 </script>
+
 
 {% endblock %}

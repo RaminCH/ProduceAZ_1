@@ -8,7 +8,7 @@ from django.views.generic.edit import FormMixin, UpdateView
 from django.contrib.auth.models import User
 from goodsApp.forms import *
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 def index(request):
@@ -22,6 +22,15 @@ def index(request):
 # **********************************************Products***************************************************
 def get_products(request):
     product_list = Products.objects.all()
+    if request.is_ajax():
+        result = []
+        for i in product_list:
+            obj = {'name' : i.name}
+            result.append(obj)
+            
+        return JsonResponse({
+            'name': result
+        })
     
     if request.method == 'POST':
         query = request.POST.get('q')
