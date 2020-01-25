@@ -179,10 +179,14 @@
 $('#sorting').change(function(){
 	var selected_val = $("#sorting option:selected").val();
 	var token = '{{csrf_token}}';
+	var cat_id = {{ cat_id }}
 	
 	$.ajax({
 		headers: { "X-CSRFToken": token },
 		url: '/ajax/'+selected_val,
+        data: {
+          'cat_id': cat_id
+        },
 		method: 'POST',
 		success: function(data){
 			for(let i = 0; i < data.length; i++){

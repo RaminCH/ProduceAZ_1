@@ -26,7 +26,11 @@ def index(request):
 
 def sorting(request, sort_by):
     if request.method == 'POST':
-        products = Products.objects.order_by(sort_by)
+        cat_id = request.POST.get('cat_id')
+        if cat_id:
+            products = Products.objects.filter(category__id = cat_id).order_by(sort_by)
+        else:
+            products = Products.objects.order_by(sort_by)
         product_list = list(products.values('id', 'name', 'price', 'image'))
 
         return JsonResponse(product_list, safe=False) 
